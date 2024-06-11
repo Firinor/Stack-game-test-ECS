@@ -7,12 +7,12 @@
       "dependencies": {},
       "hash": "1213c31c9ef8325d48e74a52b345c4db242d038b"
     },
-    "com.leopotam.ecslite": {
-      "version": "https://github.com/Leopotam/ecslite.git",
+    "com.leopotam.ecs-unityintegration": {
+      "version": "https://github.com/Leopotam/ecs-unityintegration.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5053141d7d663c6b1855c8409ac93dfac807b239"
+      "hash": "063f130aeecea526beaca172ea56bd046781e378"
     },
     "com.unity.2d.animation": {
       "version": "9.1.0",
