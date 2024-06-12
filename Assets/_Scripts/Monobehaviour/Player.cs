@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     {
         animator.Play("idle2");
     }
-
     public void RunAnimation()
     {
         animator.Play("run2");

@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
             .Add(new SpawnTimerSystem())
             .Add(new SpawnItemsSystem())
+
             .OneFrame<SpawnRequest>()
             .OneFrame<PickupRequest>()
             .OneFrame<UnloadRequest>()
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
 
         fixedUpdateSystem
             .Add(new PlayerMoveFixedSystem())
+
             .OneFrame<PlayerNextMovePoint>()
 
             .Inject(player)

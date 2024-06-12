@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class PlayerStackSystem : IEcsRunSystem
 {
@@ -54,7 +53,6 @@ public class PlayerStackSystem : IEcsRunSystem
             itemEntity.Destroy();
 
             playerData.TotalScore += 100;
-
             counter++;
         }
 
