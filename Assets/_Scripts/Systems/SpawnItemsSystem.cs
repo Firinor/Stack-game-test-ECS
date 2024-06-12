@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class SpawnItemsSystem : IEcsRunSystem
@@ -13,7 +12,7 @@ public class SpawnItemsSystem : IEcsRunSystem
     private SceneObjects sceneObjects;
 
     private readonly EcsFilter<SpawnRequest> requestFilter;
-    private readonly EcsFilter<Item> itemsFilter;
+    private readonly EcsFilter<ItemComponent, FreeItem> itemsFilter;
 
     public void Run()
     {
@@ -25,8 +24,8 @@ public class SpawnItemsSystem : IEcsRunSystem
             int randomItemIndex = Random.Range(0, prefabs.Items.Length);
 
             var spawnPoints = from p in sceneObjects.SpawnPoints
-                                  where p.childCount == 0
-                                  select p;
+                              where p.childCount == 0
+                              select p;
 
             if(!spawnPoints.Any())
                 return;
@@ -34,12 +33,19 @@ public class SpawnItemsSystem : IEcsRunSystem
             List<Transform> freeSpawnPoints = spawnPoints.ToList();
 
             int randomPointIndex = Random.Range(0, freeSpawnPoints.Count);
+            Transform pickedSpawnPoint = freeSpawnPoints[randomPointIndex];
 
-            world.NewEntity().Get<Item>().ID = randomItemIndex;
+            Item lastSpawnedItem = Object.Instantiate(prefabs.Items[randomItemIndex], pickedSpawnPoint.position, pickedSpawnPoint.rotation, pickedSpawnPoint);
 
-            Object.Instantiate(prefabs.Items[randomItemIndex], freeSpawnPoints[randomPointIndex].position, Quaternion.identity, freeSpawnPoints[randomPointIndex]);
+            EcsEntity itemEntity = world.NewEntity();
+
+            ref ItemComponent itemComponent = ref itemEntity.Get<ItemComponent>();
+            itemComponent.ID = randomItemIndex;
+            itemComponent.Item = lastSpawnedItem;
+            
+            itemEntity.Get<FreeItem>();
+
+            lastSpawnedItem.ItemEntity = itemEntity;
         }
     }
 }
-
-
